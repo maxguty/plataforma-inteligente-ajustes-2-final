@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Inteligente DUA y Ajustes Razonables</title>
+    <style>
+        /* CSS: Estilos Modernos y Accesibles */
+        :root {
+            --azul: #1565C0; --verde: #2E7D32; --amarillo: #F9A825;
+            --blanco: #FFFFFF; --gris-claro: #F5F7FA; --negro: #212121;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gris-claro); color: var(--negro); line-height: 1.6; }
+        
+        /* Layout */
+        header { background: var(--blanco); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
+        .container { max-width: 1200px; margin: auto; padding: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        
+        /* UI Components */
+        .card { background: var(--blanco); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        button { background: var(--azul); color: white; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #0d47a1; }
+        
+        /* Chatbot */
+        #chat-container { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); overflow: hidden; }
+        #chat-box { height: 200px; overflow-y: auto; padding: 10px; font-size: 0.9rem; }
+        
+        /* Responsiveness */
+        @media (max-width: 768px) { nav { display: none; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎓 DUA-APP</h1>
+    <nav>
+        <a href="#dua">¿Qué es el DUA?</a> | <a href="#ajustes">Ajustes</a> | <a href="#contacto">Contacto</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section id="hero" style="text-align:center; padding: 4rem 0;">
+        <h1>Plataforma Inteligente: DUA y Ajustes Razonables</h1>
+        <p>Transformando la educación superior hacia la inclusión plena.</p>
+        <button onclick="document.getElementById('dua').scrollIntoView()">Explorar Recursos</button>
+    </section>
+
+    <section id="dua">
+        <h2>Princípios del DUA</h2>
+        <div class="grid">
+            <div class="card"><h3>👁️ Representación</h3><p>Diversas formas de percibir la información.</p></div>
+            <div class="card"><h3>🏃 Acción y Expresión</h3><p>Múltiples formas de demostrar lo aprendido.</p></div>
+            <div class="card"><h3>❤️ Implicación</h3><p>Motivación y compromiso con el aprendizaje.</p></div>
+        </div>
+    </section>
+
+    <section id="condiciones" style="margin-top: 4rem;">
+        <h2>Condiciones y Necesidades Educativas</h2>
+        <select id="selectCondicion" onchange="actualizarInfo()" style="padding: 10px; width: 100%; border-radius: 5px;">
+            <option value="">Seleccione una condición...</option>
+            <option value="TEA">Trastorno del Espectro Autista (TEA)</option>
+            <option value="Dislexia">Dislexia</option>
+            <option value="TDAH">TDAH</option>
+        </select>
+        <div id="display-info" class="card" style="margin-top: 1rem;">
+            Seleccione una opción para ver estrategias.
+        </div>
+    </section>
+
+    <section id="contacto" style="margin-top: 4rem;">
+        <h2>Solicitar Acompañamiento</h2>
+        <form id="formContacto" onsubmit="validarForm(event)">
+            <input type="text" id="nombre" placeholder="Nombre completo" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <input type="email" id="email" placeholder="Correo electrónico" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <button type="submit">Enviar Solicitud</button>
+        </form>
+    </section>
+</main>
+
+<aside id="chat-container">
+    <div style="background: var(--azul); color: white; padding: 10px;">Asistente Pedagógico</div>
+    <div id="chat-box"></div>
+    <input type="text" id="chatInput" placeholder="Pregunta algo..." style="width: 100%; padding: 10px;">
+    <button onclick="enviarMensaje()" style="width: 100%;">Enviar</button>
+</aside>
+
+<script>
+    /* Lógica JS: Dinamismo y Gestión de Estado */
+    
+    // 1. Filtro de condiciones
+    function actualizarInfo() {
+        const val = document.getElementById('selectCondicion').value;
+        const display = document.getElementById('display-info');
+        const data = {
+            'TEA': 'Estrategias: Estructura clara, anticipación y reducción de estímulos sensoriales.',
+            'Dislexia': 'Estrategias: Textos con tipografía amigable, uso de audiolibros, mayor tiempo en exámenes.',
+            'TDAH': 'Estrategias: Instrucciones fragmentadas, descansos breves, apoyo visual constante.'
+        };
+        display.innerHTML = data[val] || 'Seleccione una condición válida.';
+    }
+
+    // 2. Validación Formulario
+    function validarForm(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre').value;
+        if(nombre.length < 3) { alert('Por favor ingrese un nombre válido'); return; }
+        alert('¡Solicitud enviada con éxito! Nos pondremos en contacto pronto.');
+    }
+
+    // 3. Chatbot
+    function enviarMensaje() {
+        const input = document.getElementById('chatInput');
+        const box = document.getElementById('chat-box');
+        if(input.value.trim() === "") return;
+        box.innerHTML += `<p><b>Tú:</b> ${input.value}</p>`;
+        setTimeout(() => {
+            box.innerHTML += `<p><b>Asistente:</b> Entendido. Estamos analizando tu consulta sobre ajustes pedagógicos...</p>`;
+            box.scrollTop = box.scrollHeight;
+        }, 500);
+        input.value = "";
+    }
+
+    // 4. Animación contadores (Ejecutar al cargar)
+    window.onload = () => {
+        console.log("Sistema cargado exitosamente bajo estándares accesibles.");
+    };
+</script>
+
+</body>
+</html>
